@@ -67,7 +67,11 @@ func (h *UserHandler) UpdateProfile(c echo.Context) error {
 	if profileRequest.Picture != nil {
 		profile.Picture = *profileRequest.Picture
 	}
-	h.profileRepository.Save(profile)
+	_, err = h.profileRepository.Save(profile)
+	if err != nil {
+		helpers.ResponseWithError(c, http.StatusInternalServerError, "Internal server error")
+		return nil
+	}
 
 	helpers.ResponseWithSuccess(c, http.StatusOK, map[string]interface{}{"message": "Profile updated"})
 	return nil

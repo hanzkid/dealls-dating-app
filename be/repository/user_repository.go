@@ -10,7 +10,6 @@ import (
 )
 
 type UserRepositoryInterface interface {
-	FindAll() ([]*entity.User, error)
 	FindByID(id int) (*entity.User, error)
 	FindByEmail(email string) (*entity.User, error)
 	Save(user *entity.User) (*entity.User, error)
@@ -27,15 +26,6 @@ func NewUserRepository(db *gorm.DB) UserRepositoryInterface {
 	return &UserRepository{
 		db: db,
 	}
-}
-
-func (r *UserRepository) FindAll() ([]*entity.User, error) {
-	var users []*entity.User
-	err := r.db.Find(&users).Error
-	if err != nil {
-		return nil, err
-	}
-	return users, nil
 }
 
 func (r *UserRepository) FindByID(id int) (*entity.User, error) {

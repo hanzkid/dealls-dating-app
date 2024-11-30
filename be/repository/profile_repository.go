@@ -8,7 +8,6 @@ import (
 )
 
 type ProfileRepositoryInterface interface {
-	FindAll() ([]*entity.Profile, error)
 	FindByUserID(userId int) (*entity.Profile, error)
 	FindByID(id int) (*entity.Profile, error)
 	Save(profile *entity.Profile) (*entity.Profile, error)
@@ -24,14 +23,6 @@ func NewProfileRepository(db *gorm.DB) ProfileRepositoryInterface {
 	return &ProfileRepository{
 		db: db,
 	}
-}
-
-func (r *ProfileRepository) FindAll() ([]*entity.Profile, error) {
-	var profiles []*entity.Profile
-	if err := r.db.Find(&profiles).Error; err != nil {
-		return nil, err
-	}
-	return profiles, nil
 }
 
 func (r *ProfileRepository) FindByID(id int) (*entity.Profile, error) {

@@ -68,7 +68,10 @@ func buildDB(cfg *config.Config) (*gorm.DB, error) {
 	sqlDB.SetMaxIdleConns(maxIdleConns)
 	sqlDB.SetMaxOpenConns(maxOpenConns)
 	sqlDB.SetConnMaxLifetime(maxLifetime)
-	sqlDB.Exec(`set search_path='public'`)
+	_, err = sqlDB.Exec(`set search_path='public'`)
+	if err != nil {
+		return nil, err
+	}
 
 	return db, nil
 }

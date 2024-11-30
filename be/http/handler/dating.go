@@ -43,7 +43,11 @@ func (h *DatingHandler) Profile(c echo.Context) error {
 		return nil
 	}
 
-	h.profileRepository.SaveViewLog(c, int(profile.ID))
+	err = h.profileRepository.SaveViewLog(c, int(profile.ID))
+	if err != nil {
+		helpers.ResponseWithError(c, http.StatusInternalServerError, "Internal Server Error")
+		return nil
+	}
 	helpers.ResponseWithSuccess(c, http.StatusOK, profile)
 	return nil
 }
@@ -71,11 +75,26 @@ func (h *DatingHandler) SwipedProfile(c echo.Context) error {
 			return nil
 		}
 		if pendingMatch == nil {
-			h.Profile(c)
+			err := h.Profile(c)
+			if err != nil {
+				c.Logger().Error(err)
+				helpers.ResponseWithError(c, http.StatusInternalServerError, "Internal Server Error")
+			}
 			return nil
 		}
-		h.matchRepository.RejectMatch(profileId, partnerId)
-		h.Profile(c)
+		err = h.matchRepository.RejectMatch(profileId, partnerId)
+		if err != nil {
+			c.Logger().Error(err)
+			helpers.ResponseWithError(c, http.StatusInternalServerError, "Internal Server Error")
+			return nil
+		}
+
+		err = h.Profile(c)
+		if err != nil {
+			c.Logger().Error(err)
+			helpers.ResponseWithError(c, http.StatusInternalServerError, "Internal Server Error")
+			return nil
+		}
 		return nil
 	}
 
@@ -103,7 +122,11 @@ func (h *DatingHandler) SwipedProfile(c echo.Context) error {
 
 	// if partner already swiped right, accept the match
 	if partnerSwiped != nil {
-		h.matchRepository.AcceptMatch(profileId, partnerId)
+		err := h.matchRepository.AcceptMatch(profileId, partnerId)
+		if err != nil {
+			helpers.ResponseWithError(c, http.StatusInternalServerError, "Internal Server Error")
+			return nil
+		}
 	} else {
 		err := h.matchRepository.CreateMatch(profileId, partnerId)
 		if err != nil {
@@ -111,7 +134,11 @@ func (h *DatingHandler) SwipedProfile(c echo.Context) error {
 			return nil
 		}
 	}
-	h.Profile(c)
+	err = h.Profile(c)
+	if err != nil {
+		c.Logger().Error(err)
+		helpers.ResponseWithError(c, http.StatusInternalServerError, "Internal Server Error")
+	}
 	return nil
 }
 
