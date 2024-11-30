@@ -2,6 +2,8 @@
 
 This project is a simplified dating application, designed as a technical assessment for the Senior Backend Engineer position at Dealls.
 
+Live url : https://dating-apps-api.burhanyusuf.dev/
+
 ## Project Structure
 
 - `db/`: Houses database-related files, including seeders and migrations.
@@ -33,6 +35,11 @@ This project is a simplified dating application, designed as a technical assessm
 4. Access the application:
     - Backend API: `http://localhost:7000`
 
+5. Running unit test : 
+    ```sh
+    go test ./...
+    ```
+
 ## Services
 
 ### Backend
@@ -52,6 +59,7 @@ The backend service is located in the `be/` directory and includes the following
 - Gomock: A mocking framework for Go, used for creating unit tests.
 - Golang-jwt: A library for handling JSON Web Tokens (JWT) in Go applications.
 - Godotenv: A library for loading environment variables from `.env` files.
+- Golint: A tool for checking Go source code for style mistakes.
 
 ### Database
 
@@ -65,3 +73,9 @@ The database service is located in the `db/` directory and stores all the data r
 ### Containerization
 
 - Docker Compose: Used to orchestrate multiple containers.
+
+#### Container:
+
+- `app`: The container running the Go backend service.
+- `postgres`: The container for the PostgreSQL database.
+- `migrations`: The container executing migration scripts to apply database changes.

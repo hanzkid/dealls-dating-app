@@ -8,16 +8,10 @@ services:
     ports:
       - "7000:7000"
     depends_on:
-      - redis
       - postgres
     environment:
       - DATABASE_URL=postgres://user:password@postgres:7002/dbname?sslmode=disable
       - REDIS_URL=redis://redis:7001
-
-  redis:
-    image: "redis:alpine"
-    ports:
-      - "7001:6379"
 
   postgres:
     image: "postgres:alpine"
