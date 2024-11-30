@@ -19,17 +19,20 @@ type MockUserRepository struct {
 
 // FindByEmail implements repository.UserRepositoryInterface.
 func (m *MockUserRepository) FindByEmail(email string) (*entity.User, error) {
-	panic("unimplemented")
+	args := m.Called(email)
+	return args.Get(0).(*entity.User), args.Error(1)
 }
 
 // Save implements repository.UserRepositoryInterface.
 func (m *MockUserRepository) Save(user *entity.User) (*entity.User, error) {
-	panic("unimplemented")
+	args := m.Called(user)
+	return args.Get(0).(*entity.User), args.Error(1)
 }
 
 // Update implements repository.UserRepositoryInterface.
 func (m *MockUserRepository) Update(user *entity.User) (*entity.User, error) {
-	panic("unimplemented")
+	args := m.Called(user)
+	return args.Get(0).(*entity.User), args.Error(1)
 }
 
 func (m *MockUserRepository) FindByID(id int) (*entity.User, error) {

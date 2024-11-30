@@ -106,4 +106,22 @@ Core functionalities for matchmaking and interaction:
 ### Simplified Sequence Diagram 
 ![Untitled](https://github.com/user-attachments/assets/7084b6d7-d7a2-4b31-8381-9897b4f0bb0f)
 
+## Test Case
 
+### Test Case Summary
+
+| Test File       | Test Case                                | Description                                                                 | Expected Outcome                       |
+|-----------------|------------------------------------------|-----------------------------------------------------------------------------|----------------------------------------|
+| `auth_test.go`  | `TestRegister`                           | Tests user registration with valid data.                                    | Should return HTTP 201 Created.        |
+| `auth_test.go`  | `TestLogin`                              | Tests user login with valid credentials.                                    | Should return HTTP 200 OK with token.  |
+| `auth_test.go`  | `TestLoginInvalidCredentials`            | Tests user login with invalid credentials.                                  | Should return HTTP 401 Unauthorized.   |
+| `auth_test.go`  | `TestRegisterInternalServerError`        | Tests user registration with server error.                                  | Should return HTTP 500 Internal Error. |
+| `dating_test.go`| `TestProfile`                            | Tests viewing a random profile within daily limit.                          | Should return HTTP 200 OK.             |
+| `dating_test.go`| `TestProfileDailyLimit`                  | Tests viewing a random profile exceeding daily limit.                       | Should return HTTP 403 Forbidden.      |
+| `dating_test.go`| `TestSwipedProfile`                      | Tests swiping a profile within daily limit.                                 | Should return HTTP 200 OK.             |
+| `dating_test.go`| `TestSwipedProfileDailyLimit`            | Tests swiping a profile exceeding daily limit.                              | Should return HTTP 403 Forbidden.      |
+| `dating_test.go`| `TestMatchList`                          | Tests retrieving the list of matched profiles.                              | Should return HTTP 200 OK.             |
+| `user_test.go`  | `TestUserHandler_Me`                     | Tests retrieving authenticated user's profile.                              | Should return HTTP 200 OK.             |
+| `user_test.go`  | `TestUserHandler_UpdateProfile`          | Tests updating authenticated user's profile.                                | Should return HTTP 200 OK.             |
+| `user_test.go`  | `TestUserHandler_PurchasePremium`        | Tests purchasing premium subscription when not already subscribed.          | Should return HTTP 200 OK.             |
+| `user_test.go`  | `TestUserHandler_PurchasePremiumAlreadyActive` | Tests purchasing premium subscription when already subscribed.          | Should return HTTP 400 Bad Request.    |
