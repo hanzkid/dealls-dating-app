@@ -95,4 +95,15 @@ Core functionalities for matchmaking and interaction:
 2. **JWT-based authentication**: Provides a stateless and secure method for authenticating users across endpoints.  
 3. **Bcrypt hash**: Ensures secure storage of passwords by employing a strong hashing algorithm with built-in salting.  
 4. **PostgreSQL**: Offers reliability, scalability, and advanced querying capabilities for managing relational data.  
-5. **Docker containerization**: Simplifies deployment by creating consistent environments across different systems.  
+5. **Docker containerization**: Simplifies deployment by creating consistent environments across different systems.
+
+
+## Design System
+
+### Entity Relationship Diagram ( ERD )
+![image](https://github.com/user-attachments/assets/1cddeeb6-8986-4df5-926f-359ed5e3316e)
+
+### Simplified Sequence Diagram 
+![Untitled](https://github.com/user-attachments/assets/7084b6d7-d7a2-4b31-8381-9897b4f0bb0f)
+
+
