@@ -12,46 +12,11 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/mock"
 )
-
-type MockUserRepo struct {
-	mock.Mock
-}
-
-// FindByID implements repository.UserRepositoryInterface.
-func (m *MockUserRepo) FindByID(id int) (*entity.User, error) {
-	panic("unimplemented")
-}
-
-// Subscribe implements repository.UserRepositoryInterface.
-func (m *MockUserRepo) Subscribe(c echo.Context) (*entity.User, error) {
-	panic("unimplemented")
-}
-
-// Update implements repository.UserRepositoryInterface.
-func (m *MockUserRepo) Update(user *entity.User) (*entity.User, error) {
-	panic("unimplemented")
-}
-
-func (m *MockUserRepo) CheckSubscription(c echo.Context) (bool, error) {
-	args := m.Called(c)
-	return args.Bool(0), args.Error(1)
-}
-
-func (m *MockUserRepo) Save(user *entity.User) (*entity.User, error) {
-	args := m.Called(user)
-	return args.Get(0).(*entity.User), args.Error(1)
-}
-
-func (m *MockUserRepo) FindByEmail(email string) (*entity.User, error) {
-	args := m.Called(email)
-	return args.Get(0).(*entity.User), args.Error(1)
-}
 
 func TestRegister(t *testing.T) {
 	e := echo.New()
-	mockUserRepo := new(MockUserRepo)
+	mockUserRepo := new(MockUserRepository)
 	cfg := &config.Config{}
 	handler := NewAuthHandler(mockUserRepo, cfg)
 
@@ -75,7 +40,7 @@ func TestRegister(t *testing.T) {
 
 func TestLogin(t *testing.T) {
 	e := echo.New()
-	mockUserRepo := new(MockUserRepo)
+	mockUserRepo := new(MockUserRepository)
 	cfg := &config.Config{
 		JWT: config.JWT{
 			Secret: "secret",
@@ -102,7 +67,7 @@ func TestLogin(t *testing.T) {
 
 func TestLoginInvalidCredentials(t *testing.T) {
 	e := echo.New()
-	mockUserRepo := new(MockUserRepo)
+	mockUserRepo := new(MockUserRepository)
 	cfg := &config.Config{
 		JWT: config.JWT{
 			Secret: "secret",
@@ -130,7 +95,7 @@ func TestLoginInvalidCredentials(t *testing.T) {
 
 func TestRegisterInternalServerError(t *testing.T) {
 	e := echo.New()
-	mockUserRepo := new(MockUserRepo)
+	mockUserRepo := new(MockUserRepository)
 	cfg := &config.Config{}
 	handler := NewAuthHandler(mockUserRepo, cfg)
 

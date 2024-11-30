@@ -1,9 +1,11 @@
 # Dating Apps Project
 
+This project is a simplified dating application, designed as a technical assessment for the Senior Backend Engineer position at Dealls.
+
 ## Project Structure
 
-- `db/`: Contains database-related files: seeders and migrations.
-- `be/`: Contains main backend service code.
+- `db/`: Houses database-related files, including seeders and migrations.
+- `be/`: Contains the core backend service code.
 - `docker-compose.yml`: Docker Compose file to set up and run the services.
 
 ## Prerequisites
@@ -15,29 +17,51 @@
 
 1. Clone the repository:
     ```sh
-    https://github.com/hanzkid/dealls-dating-app.git
+    git clone https://github.com/hanzkid/dealls-dating-app.git
     cd dealls-dating-app
     ```
 
-2. Build and start the services:
+2. Build and launch the services:
     ```sh
     docker-compose up --build
     ```
 
-3. Access the application:
-    - Backend API: `http://localhost:<backend_port>`
-    - Database: `http://localhost:<database_port>`
+3. Configure the Environment:
+
+    Adjust the necessary environment variables in the `docker-compose.yml` file for the services. Additionally, copy the `.env.example` file in the `be` directory to `.env` and modify the values as needed.
+
+4. Access the application:
+    - Backend API: `http://localhost:7000`
 
 ## Services
 
 ### Backend
 
-The backend service is defined in the `be/` directory. It handles the core logic of the dating application.
+The backend service is located in the `be/` directory and includes the following subfolders:
+
+- `config/`: Contains configuration files for the application.
+- `entity/`: Defines the data models used within the application.
+- `helpers/`: Contains utility functions used throughout the application.
+- `http/`: Manages HTTP server requests and processes.
+- `repository/`: Contains code for database interactions.
+
+#### Stack:
+
+- Echo Framework: A high-performance, extensible, minimalist web framework for Go.
+- Gorm: An ORM library for Golang, providing powerful tools for database interactions.
+- Gomock: A mocking framework for Go, used for creating unit tests.
+- Golang-jwt: A library for handling JSON Web Tokens (JWT) in Go applications.
+- Godotenv: A library for loading environment variables from `.env` files.
 
 ### Database
 
-The database service is defined in the `db/` directory. It stores all the data required by the application.
+The database service is located in the `db/` directory and stores all the data required by the application.
 
-## Configuration
+#### Stack:
 
-The `docker-compose.yml` file contains the configuration for all services. You can modify this file to change the settings as per your requirements.
+- PostgreSQL: A popular open-source database management system.
+- Goose: A Golang-based tool for managing database migrations.
+
+### Containerization
+
+- Docker Compose: Used to orchestrate multiple containers.
